@@ -1,15 +1,20 @@
 -come up with question set to differentiate user opinions
 
--decide on a css profile
+-passport.js support
 
--build nav bar
+-socket.io support
+
+NAV BAR
+	-build it
 
 HOME PAGE
 	-find background image
 
 
 CHAT ROOM
-
+	-build sidebar
+	-build main chat
 
 
 USER PAGE
+	-build prefs
