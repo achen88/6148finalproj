@@ -21,20 +21,25 @@ router.get('/signup', function(req, res, next) {
 	res.render('signup', {});
 });
 
+router.get('/chatroom', function(req, res, next) {
+	res.render('chatroom', {});
+});
+
 router.post('/login',
-	passport.authenticate('local', { successRedirect: '/user/:username',
+	passport.authenticate('local', { successRedirect: '/chatroom',
 		failureRedirect: '/login',
 		failureFlash: false })
 	);
 
 router.post('/signup', function (req, res, next) {
 	console.log('signed up');
+	console.log(req.body);
 	var user = new User({username: req.body.username});
 	User.register(user, req.body.password, function(registrationError) {
 		if(!registrationError) {
 			req.login(user, function(loginError) {
 				if (loginError) { return next(loginError); }
-				return res.redirect('/');
+				return res.redirect('/chatroom');
 			});
 		} else {
 			res.send(registrationError);

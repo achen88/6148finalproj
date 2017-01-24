@@ -20,6 +20,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/test');
 var connection = mongoose.connection;
@@ -48,6 +50,19 @@ app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+
+  socket.on('chat message', function(msg) {
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

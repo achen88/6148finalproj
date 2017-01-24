@@ -1,11 +1,17 @@
--come up with question set to differentiate user opinions
-
--passport.js support
+-5 radio  button questions
+	trump vs Hilary
+	prolife vs pro choice
+	higher being(s)?
 
 -socket.io support
 
 NAV BAR
-	-build it
+	-improve aesthetics
+
+LOGIN
+
+SIGNUP
+	-implement character limit for username,pw
 
 HOME PAGE
 	-find background image

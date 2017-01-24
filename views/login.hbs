@@ -2,9 +2,28 @@
 <html>
   <head>
     <title>TITLE</title>
-    <link rel='stylesheet' href='/node_modules/materialize-css/bin/materialize.css'/>
+    {{> head}}
   </head>
   <body>
-  	
+  	{{> navbar}}
+  	<div class="row">
+    <form class="col s12" action="/login" method="post">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="username" type="text" class="validate" name="username">
+          <label for="username">Username</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate" name="password">
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <div class="row" style="text-align: right;">
+	    <button class="btn waves-effect waves-light" type="submit">Submit</button>
+	  	</div>
+    </form>
+  	</div>
   </body>
 </html>
