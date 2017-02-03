@@ -23,7 +23,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/test');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/6148');
 var connection = mongoose.connection;
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.on('connected', function() {
@@ -43,6 +43,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+console.log(path.join(__dirname, 'public'));
 
 app.use(session({ secret: 'my super secret secret', resave: 'false', saveUninitialized: 'true' }));
 app.use(passport.initialize());
@@ -50,19 +51,6 @@ app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-
-  socket.on('chat message', function(msg) {
-    console.log('message: ' + msg);
-    io.emit('chat message', msg);
-  });
-
-  socket.on('disconnect', function() {
-    console.log('user disconnected');
-  });
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

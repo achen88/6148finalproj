@@ -25,6 +25,10 @@ router.get('/chatroom', function(req, res, next) {
 	res.render('chatroom', {});
 });
 
+router.get('/user/:username', function(req, res, next) {
+	var username = req.params.username;
+});
+
 router.post('/login',
 	passport.authenticate('local', { successRedirect: '/chatroom',
 		failureRedirect: '/login',
@@ -34,7 +38,7 @@ router.post('/login',
 router.post('/signup', function (req, res, next) {
 	console.log('signed up');
 	console.log(req.body);
-	var user = new User({username: req.body.username});
+	var user = new User({username: req.body.username, radio1: req.body.radio1});
 	User.register(user, req.body.password, function(registrationError) {
 		if(!registrationError) {
 			req.login(user, function(loginError) {

@@ -8,6 +8,9 @@ var app = require('../app');
 var debug = require('debug')('achen88-koogoro:server');
 var http = require('http');
 
+var User = require('../schemas/user');
+var Message = require('../schemas/message');
+
 /**
  * Get port from environment and store in Express.
  */
@@ -20,6 +23,31 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+
+function roomname(data) {
+  var from = data.from;
+  var to = data.to;
+  if(from < to) {
+    return from.concat('-').concat(to);
+  }
+  return to.concat('-').concat(from);
+}
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+
+  socket.on('message', function(data) {
+    console.log('message: ' + data.msg);
+    var message = new Message({from: data.from, to: data.to, msg: data.msg});
+    message.save();
+    socket.broadcast.to(roomname(data)).emit('message', data);
+  });
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+});
 
 /**
  * Listen on provided port, on all network interfaces.

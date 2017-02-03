@@ -4,11 +4,24 @@
     <title>TITLE</title>
     {{> head}}
     <link rel="stylesheet" href="stylesheets/chatroom.css">
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/socket.io.js"></script>
   </head>
   <body>
   	{{> navbar}}
-  	{{> chatroom}}
+  	<div class="row">
+  	  <div class="col s3">
+  		<ul class="collection with-header">
+          <li class="collection-header">Conversations</li>
+          {{#each conversations}}
+      	    <li class="bold"><a href={{{username}}} class="waves-effect waves-teal"></a></li>
+          {{/each}}
+    	</ul>
+      </div>
+      <div class="col s9">
+      	{{> chatroom}}
+      </div>
+    </div>
+  	
   	
   </body>
 </html>
