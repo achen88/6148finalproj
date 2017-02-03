@@ -36,12 +36,15 @@ function roomname(data) {
 
 io.on('connection', function(socket){
   console.log('a user connected');
-
+  socket.on('room', function(room) {
+    socket.join(room);
+  });
   socket.on('message', function(data) {
     console.log('message: ' + data.msg);
     var message = new Message({from: data.from, to: data.to, msg: data.msg});
     message.save();
-    socket.broadcast.to(roomname(data)).emit('message', data);
+    io.in(roomname(data)).emit('message', data);
+    console.log(roomname(data));
   });
 
   socket.on('disconnect', function() {

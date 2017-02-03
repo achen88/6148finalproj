@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<link rel="stylesheet" href="stylesheets/chatroom.css">
 <script>
   // Wait until the DOM has loaded
   $(document).ready(function() {
@@ -6,21 +7,23 @@
 
     // YOUR CODE HERE
     var socket = io();
+    //var socket = io("{{room}}");
     $('form').submit(function() {
-      socket.emit('chat message', {from:{{username}}, msg:$('#m').val()});
+      socket.emit('message', {from:"{{user}}", to:"{{partner}}", msg:$('#m').val()});
+      console.log($('#m').val());
       $('#m').val('');
       return false;
     });
-    socket.on('chat message', function(data) {
+    socket.on('message', function(data) {
       $('#messages').append($('<li>').text(data.from.concat(': ').concat(data.msg)));
+    });
+    socket.on('connect', function() {
+      socket.emit('room', "{{room}}");
     });
   });
 </script>
 
-<ul id="messages" style="padding-top: 4px;">
-  {{#each messages}}
-    <li>{{from}}: {{message}}</li>
-</ul>
+<ul id="messages" style="padding-top: 4px;"></ul>
 <form action="">
   <input id="m" autocomplete="off" /><button>Send</button>
 </form>
