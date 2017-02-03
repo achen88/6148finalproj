@@ -57,7 +57,7 @@ router.get('/user', function(req, res, next) {
 	if(req.isAuthenticated()) {
 		var user = req.user;
 		var username = user.username;
-		var preference = "Hilary";
+		var preference = "Hillary";
 		if(user.radio1 === 1) {
 			preference = "Trump";
 		}
