@@ -5,7 +5,11 @@
     <a href="#" data-activates="mobile-demo" class="button-collapse"><img src="images/ic_reorder_white_24dp_2x.png" style="display: block; margin: 15% 0 0 0; text-align: left"></a>
     <ul class="right hide-on-med-and-down">
       {{#if loggedin}}
-        <li><a href="chatroom">Chat</a></li>
+        {{#if ready}}
+          <li><a href="endchat">End Chat</a></li>
+        {{else}}
+          <li><a href="chatroom">Chat</a></li>
+        {{/if}}
         <li><a href="user">Profile</a></li>
         <li><a href="logs">Logs</a></li>
       {{else}}
@@ -15,7 +19,11 @@
     </ul>
     <ul class="side-nav" id="mobile-demo">
       {{#if loggedin}}
-        <li><a href="chatroom">Chat</a></li>
+        {{#if ready}}
+          <li><a href="endchat">End Chat</a></li>
+        {{else}}
+          <li><a href="chatroom">Chat</a></li>
+        {{/if}}
         <li><a href="user">Profile</a></li>
         <li><a href="logs">Logs</a></li>
       {{else}}

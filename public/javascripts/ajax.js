@@ -18,5 +18,5 @@ $(document).ready(function () {
 });
 
 $(document).ajaxStop(function(){
-    window.location.reload();
+    setTimeout(window.location.reload(), 500);
 });

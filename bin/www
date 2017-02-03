@@ -38,9 +38,12 @@ function roomname(data) {
 }
 
 io.on('connection', function(socket){
+  var users = {};
   console.log('a user connected');
   socket.on('room', function(room) {
+    users[socket.id] = room;
     socket.join(room);
+    console.log(users);
   });
   socket.on('message', function(data) {
     console.log('message: ' + data.msg);
@@ -51,7 +54,9 @@ io.on('connection', function(socket){
   });
 
   socket.on('disconnect', function() {
-    console.log('user disconnected');
+    io.in(users[socket.id]).emit('message', {from: "", to: "", msg: "user disconnected."});
+    delete users[socket.id];
+    console.log("user discon");
   });
 });
 
