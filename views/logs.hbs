@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{> head_partial}}
+    <link rel="stylesheet" href="stylesheets/chatroom.css">
+  </head>
+  <body>
+  	{{> navbar}}
+    <ul id="messages" style="padding-top: 4px;">
+    	{{#each messages}}
+    		<li>{{from}}: {{msg}}</li>
+    	{{/each}}
+    </ul>
+  </body>
+</html>

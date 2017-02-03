@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var User = require('../schemas/user.js');
+var Message = require('../schemas/message.js');
 var router = express.Router();
 
 function roomname(from, to) {
@@ -65,6 +66,19 @@ router.get('/user', function(req, res, next) {
 		res.redirect('/login');
 	}
 });
+
+router.get('/logs', function(req, res, next) {
+	if(req.isAuthenticated()) {
+		var user = req.user;
+		var messages = {};
+		Message.find({$or:[{to: req.user.username}, {from: req.user.username}]}, null, {sort:{ "$natural": 1 }}, function(err, results) {
+		 	res.render('logs', {username: req.user.username, loggedin: true, messages: results});
+		});
+	}
+	else {
+		res.redirect('/login');
+	}
+})
 
 router.get('/connect', function(req, res, next) {
 	console.log(req.user.username);
