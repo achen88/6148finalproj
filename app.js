@@ -22,8 +22,12 @@ passport.deserializeUser(User.deserializeUser());
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/6148');
+if(process.env.NODE_ENV == "production") {
+  mongoose.connect("mongodb://achen-6148:fwwWB3VZpwItxKKtUdWcoxkNBxuRjp2dau7sM12femx0uIjWDY8mCU1LTmMPSuiMoSGJC6l3DBzOUb1DiPZVxw==@achen-6148.documents.azure.com:10250/?ssl=true");
+}
+else {
+  mongoose.connect('mongodb://localhost/6148');
+}
 var connection = mongoose.connection;
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.on('connected', function() {
