@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/login', function(req, res, next) {
 	if(req.isAuthenticated()) {
-		res.redirect('/user/:username');
+		res.redirect('/user');
 	}
 	else {
 		res.render('login');
@@ -37,10 +37,10 @@ router.get('/chatroom', function(req, res, next) {
 	if(req.isAuthenticated()) {
 		User.find({username: req.user.username}, function(err, users) {
 			if(users[0].partner != null) {
-				res.render('chatroom', {connected: true, room: roomname(req.user.username, req.user.partner), user: req.user.username, partner: req.user.partner});
+				res.render('chatroom', {loggedin: true, connected: true, room: roomname(req.user.username, req.user.partner), user: req.user.username, partner: req.user.partner});
 			}
 			else {
-				res.render('chatroom', {connected: false});
+				res.render('chatroom', {loggedin: true, connected: false});
 				console.log('fail');
 			}
 		});
@@ -50,8 +50,20 @@ router.get('/chatroom', function(req, res, next) {
 	}
 });
 
-router.get('/user/:username', function(req, res, next) {
-	var user = req.user;
+router.get('/user', function(req, res, next) {
+	if(req.isAuthenticated()) {
+		var user = req.user;
+		var username = user.username;
+		var preference = "Hilary";
+		if(user.radio1 === 1) {
+			preference = "Trump";
+		}
+
+		res.render('user', {username: username, loggedin: true, preference: preference});
+	}
+	else {
+		res.redirect('/login');
+	}
 });
 
 router.get('/connect', function(req, res, next) {
